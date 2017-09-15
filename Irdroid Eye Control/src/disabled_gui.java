@@ -1,4 +1,4 @@
-package com.microcontrollerbg.eyecontrol;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Frame;
@@ -79,7 +79,7 @@ public class disabled_gui  {
 		   int x = (int) ((dimension.getWidth() - 840) / 2);
 		    int y = (int) ((dimension.getHeight() - 570) / 2);
 		  window.getContentPane().add(
-		      new JLabel("Loading...", new ImageIcon(MySplashScreenDemo.class.getResource("IR_branging.png")), SwingConstants.CENTER));
+		      new JLabel("Loading...", new ImageIcon(disabled_gui.class.getResource("IR_branging.png")), SwingConstants.CENTER));
 		  window.setBounds(x, y, 840, 570);
 
 		  window.setVisible(true);
@@ -212,7 +212,7 @@ public class disabled_gui  {
 		    int y = (int) ((dim.getHeight() - 534) / 2);
 		 
 		//frmIrdroidAccessibility.setLocation(dim.width/2-frmIrdroidAccessibility.getSize().width/2, dim.height/2-frmIrdroidAccessibility.getSize().height/2);
-		frmIrdroidAccessibility.setTitle("Irdroid accessibility v1.0");
+		frmIrdroidAccessibility.setTitle("Irdroid Eye Control ");
 		frmIrdroidAccessibility.setResizable(false);
 		frmIrdroidAccessibility.setBounds(x, y, 628, 534);
 		frmIrdroidAccessibility.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
