@@ -217,12 +217,8 @@ public class disabled_gui  {
 		frmIrdroidAccessibility.setBounds(x, y, 628, 534);
 		frmIrdroidAccessibility.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmIrdroidAccessibility.getContentPane().setLayout(null);
-		try {
-			frmIrdroidAccessibility.setIconImage(ImageIO.read(new File("res/icon.png")));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
+		frmIrdroidAccessibility.setIconImage(new ImageIcon(getClass().getResource("icon.png")).getImage());
 		
 		JButton btnNewButton = new JButton("Канал-");
 		String pathToImage = "tv_minus.png";
