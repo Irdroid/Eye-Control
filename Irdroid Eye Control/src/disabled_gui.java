@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Properties;
@@ -27,6 +28,11 @@ import javax.swing.SwingConstants;
 
 import org.harctoolbox.lircclient.LircClient;
 import org.harctoolbox.lircclient.TcpLircClient;
+
+import edu.cmu.sphinx.api.Configuration;
+import edu.cmu.sphinx.api.LiveSpeechRecognizer;
+import edu.cmu.sphinx.api.SpeechResult;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 
@@ -40,6 +46,7 @@ import javax.swing.JWindow;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JMenuItem;
+import javax.swing.JCheckBox;
 
 
 public class disabled_gui  {
@@ -47,6 +54,7 @@ public class disabled_gui  {
 	private JFrame frmIrdroidAccessibility;
 	LircClient lirc;
     String lirc_remote ;
+    Boolean voice_enable ;
 	private List<String> remotes;
 	/**
 	 * Launch the application.
@@ -100,7 +108,7 @@ public class disabled_gui  {
 
 		// Preference key name
 		final String PREF_NAME = "remote";
-
+		final String PREF_NAME1 = "voice_enable";
 		// Set the value of the preference
 	//	String newValue = "a string";
 	//	prefs.put(PREF_NAME, newValue);
@@ -109,7 +117,10 @@ public class disabled_gui  {
 		// default value is returned if the preference does not exist
 		String defaultValue = "Samsung_TV";
 		String propertyValue = prefs.get(PREF_NAME, defaultValue); // "a string"
-			lirc_remote=propertyValue;
+		lirc_remote= propertyValue;
+		Boolean default1= false;
+		Boolean propertyValue1 = prefs.getBoolean(PREF_NAME1, default1); // "a string"
+	    voice_enable =propertyValue1;
 			
 	}
 	
@@ -124,13 +135,26 @@ public class disabled_gui  {
 			//	String newValue = "a string";
 				prefs1.put(PREF_NAME1, remote);
 	}
+	
+	public void store_chkbox(Boolean value){
+		// Retrieve the user preference node for the package com.mycompany
+				Preferences prefs1 = Preferences.userNodeForPackage(disabled_gui.class);
+
+				// Preference key name
+				final String PREF_NAME1 = "voice_enable";
+
+				// Set the value of the preference
+			//	String newValue = "a string";
+				prefs1.putBoolean(PREF_NAME1,value);
+	}
 
 	/**
 	 * Create the application.
 	 */
 	public disabled_gui() {
-		initialize();
 		read_remote();
+		initialize();
+		
 	}
 	private void elements(){
 		List <String> remos= disabled_gui.this.get_remotes();
@@ -163,7 +187,102 @@ public class disabled_gui  {
         }
 	}
 	
-	 
+	 public void thread(){
+			if(voice_enable){
+				infoBox("Voice control active!", "You can use your voice to control the application");
+			    new Thread(new Runnable() {
+			        public void run() {
+			       	Configuration configuration = new Configuration();
+
+			     // Set path to the acoustic model.
+			     configuration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
+			     // Set path to the dictionary.
+			     URL resource = getClass().getResource("0412.dic");
+			    
+			     configuration.setDictionaryPath(resource.toString());
+			     // Set path to the language model.
+			     URL resource1 = getClass().getResource("0412.lm");
+			     configuration.setLanguageModelPath(resource1.toString());
+			     //Recognizer object, Pass the Configuration object
+			     LiveSpeechRecognizer recognize = null;
+			         try {
+			             recognize = new LiveSpeechRecognizer(configuration);
+			         } catch (IOException ex) {
+			         //    Logger.getLogger(disabled_gui.class.getName()).log(Level.SEVERE, null, ex);
+			         }
+			     
+			     //Start Recognition Process (The bool parameter clears the previous cache if true)
+			     recognize.startRecognition(true);
+			     
+			     //Creating SpeechResult object
+			     SpeechResult result;
+			     
+			     //Check if recognizer recognized the speech
+			     while ((result = recognize.getResult()) != null) {
+			         
+			         //Get the recognized speech
+			         String command = result.getHypothesis();
+			         String work = null;
+			         Process p;
+			         
+			         //Some Extra Commands from my Corpus File
+			         if(command.equalsIgnoreCase("up")) {
+			            System.out.println("up");
+			             try {
+			                 lirc.sendIrCommand(lirc_remote, "P+", 0);
+			             } catch (IOException ex) {
+			           //      Logger.getLogger(disabled_gui.class.getName()).log(Level.SEVERE, null, ex);
+			             }
+			         } else if (command.equalsIgnoreCase("down")) {
+			             System.out.println("down");
+			             try {
+			                 lirc.sendIrCommand(lirc_remote, "P-", 0);
+			             } catch (IOException ex) {
+			             //    Logger.getLogger(disabled_gui.class.getName()).log(Level.SEVERE, null, ex);
+			             }
+			         } else if (command.equalsIgnoreCase("power")) {
+			              System.out.println("power");
+			              try {
+			                 lirc.sendIrCommand(lirc_remote, "POWER", 0);
+			             } catch (IOException ex) {
+			           //      Logger.getLogger(disabled_gui.class.getName()).log(Level.SEVERE, null, ex);
+			             }
+			         } else if (command.equalsIgnoreCase("mute")) {
+			             System.out.println("mute");
+			             try {
+			                 lirc.sendIrCommand(lirc_remote, "MUTE", 0);
+			             } catch (IOException ex) {
+			         //        Logger.getLogger(disabled_gui.class.getName()).log(Level.SEVERE, null, ex);
+			             }
+			         } else if (command.equalsIgnoreCase("lauder")) {
+			              System.out.println("lauder");
+			              try {
+			                 lirc.sendIrCommand(lirc_remote, "Vol+", 0);
+			                 lirc.sendIrCommand(lirc_remote, "Vol+", 0);
+			                 lirc.sendIrCommand(lirc_remote, "Vol+", 0);
+			                 lirc.sendIrCommand(lirc_remote, "Vol+", 0);
+			             } catch (IOException ex) {
+			         //        Logger.getLogger(disabled_gui.class.getName()).log(Level.SEVERE, null, ex);
+			             }
+			         } else if (command.equalsIgnoreCase("silent")) {
+			              System.out.println("silent");
+			              try {
+			                 lirc.sendIrCommand(lirc_remote, "Vol-", 0);
+			                 lirc.sendIrCommand(lirc_remote, "Vol-", 0);
+			                 lirc.sendIrCommand(lirc_remote, "Vol-", 0);
+			                 lirc.sendIrCommand(lirc_remote, "Vol-", 0);
+			             } catch (IOException ex) {
+			              //   Logger.getLogger(disabled_gui.class.getName()).log(Level.SEVERE, null, ex);
+			             }
+			         } 
+			         
+			        
+			     }      
+			 }
+			}).start();
+			}	 
+		 
+	 }
 
 	/**
 	 * Initialize the contents of the frame.
@@ -220,7 +339,8 @@ public class disabled_gui  {
 		
 		frmIrdroidAccessibility.setIconImage(new ImageIcon(getClass().getResource("icon.png")).getImage());
 		
-		JButton btnNewButton = new JButton("Канал-");
+		JButton btnNewButton = new JButton("Prog-");
+		btnNewButton.setMnemonic('a');
 		String pathToImage = "tv_minus.png";
 		ImageIcon myIcon = new ImageIcon(getClass().getClassLoader().getResource(pathToImage));
 		btnNewButton.setIcon(myIcon);
@@ -246,7 +366,8 @@ public class disabled_gui  {
 		frmIrdroidAccessibility.getContentPane().add(btnNewButton);
 		String pathToImage1 = "tv_plus.png";
 		ImageIcon myIcon1 = new ImageIcon(getClass().getClassLoader().getResource(pathToImage1));
-		JButton button = new JButton("Канал+");
+		JButton button = new JButton("Prog+");
+		button.setMnemonic('b');
 		button.setIcon(myIcon1);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -269,7 +390,8 @@ public class disabled_gui  {
 		frmIrdroidAccessibility.getContentPane().add(button);
 		String pathToImage2 = "stop.png";
 		ImageIcon myIcon2 = new ImageIcon(getClass().getClassLoader().getResource(pathToImage2));
-		JButton button_1 = new JButton("Вкл/Изк");
+		JButton button_1 = new JButton("ON/OFF");
+		button_1.setMnemonic('c');
 		button_1.setIcon(myIcon2);
 		button_1.setBounds(433, 63, 138, 117);
 		button_1.addActionListener(new ActionListener() {
@@ -292,7 +414,8 @@ public class disabled_gui  {
 		frmIrdroidAccessibility.getContentPane().add(button_1);
 		String pathToImage3 = "speaker_minus.png";
 		ImageIcon myIcon4 = new ImageIcon(getClass().getClassLoader().getResource(pathToImage3));
-		JButton button_2 = new JButton("Звук-");
+		JButton button_2 = new JButton("Vol-");
+		button_2.setMnemonic('d');
 		button_2.setIcon(myIcon4);
 		button_2.setBounds(57, 266, 131, 117);
 		button_2.addActionListener(new ActionListener() {
@@ -314,7 +437,8 @@ public class disabled_gui  {
 		frmIrdroidAccessibility.getContentPane().add(button_2);
 		String pathToImage4 = "speaker_plus.png";
 		ImageIcon myIcon5 = new ImageIcon(getClass().getClassLoader().getResource(pathToImage4));
-		JButton button_3 = new JButton("Звук+");
+		JButton button_3 = new JButton("Vol+");
+		button_3.setMnemonic('e');
 		button_3.setIcon(myIcon5);
 		button_3.setBounds(245, 266, 131, 117);
 		button_3.addActionListener(new ActionListener() {
@@ -337,6 +461,7 @@ public class disabled_gui  {
 		String pathToImage6 = "speaker_off.png";
 		ImageIcon myIcon6 = new ImageIcon(getClass().getClassLoader().getResource(pathToImage6));
 		JButton btnMute = new JButton("MUTE");
+		btnMute.setMnemonic('f');
 		btnMute.setIcon(myIcon6);
 		btnMute.setBounds(433, 266, 138, 117);
 		btnMute.addActionListener(new ActionListener() {
@@ -375,6 +500,9 @@ public class disabled_gui  {
 		JMenu mnInfo = new JMenu("Settings");
 		menuBar.add(mnInfo);
 		
+		JMenu mnVoiceControl = new JMenu("Voice control");
+		mnInfo.add(mnVoiceControl);
+		
 		JMenuItem menuItem = new JMenuItem("Device");
 		mnInfo.add(menuItem);
 		menuItem.addActionListener(
@@ -387,6 +515,48 @@ public class disabled_gui  {
 	            }
 	        );
 		
+		final JCheckBox chckbxEnabledisable = new JCheckBox("Enable / Disable");
+		
+		mnVoiceControl.add(chckbxEnabledisable);
+		
+		
+			//chckbxEnabledisable.setSelected(true);
+		
+		
+		chckbxEnabledisable.addActionListener( new ActionListener(){
+			
+			
+			  public void actionPerformed(ActionEvent e)
+              {
+		     boolean selected= chckbxEnabledisable.getModel().isSelected();
+             System.out.println(selected);
+             voice_enable= selected;
+             System.out.println(voice_enable);
+             store_chkbox(voice_enable);
+             thread();
+               
+              }
+		}
+		
+				
+				
+				
+				
+				
+				);
+		if(voice_enable){
+		chckbxEnabledisable.setSelected(true);
+		thread();
+		}
+		
+		
+		
+		
+		
+		
+		
+
+	
 		
 	}
 }

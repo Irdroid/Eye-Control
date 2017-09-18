@@ -5,5 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="forms-1.3.0.jar" sourcepath="forms-1.3.0-src.zip"/>
 	<classpathentry kind="lib" path="C:/Users/bakalski/Desktop/jcommander-1.72.jar"/>
+	<classpathentry kind="lib" path="G:/VoiceCom-master/sphinx4-core-5prealpha-20160628.232526-10.jar"/>
+	<classpathentry kind="lib" path="G:/VoiceCom-master/sphinx4-data-5prealpha-20160628.232535-10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
