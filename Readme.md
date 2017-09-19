@@ -2,6 +2,10 @@
 
 The Irdroid Eye Control application allows the user to control Infrared controlled appliances such as TVs, STBs and Music Appliances by using the Eye Control technology (*requires pre-installed Eye Control Hardware and Software) or via voice control commands in Windows. The application implements a  Lirc/WinLirc client, optimized for the Eye Control. Irdroid Eye Control is free and open source software application. Sources and Binaries can be downloaded from http://github.com/irdroid. 
 
+
+[![Watch the video](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](http://youtu.be/vt5fpE0bzSY)
+
+
 ## Application features:
 
 Support for all major TV, STB, Video Manufacturers

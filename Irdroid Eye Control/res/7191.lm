@@ -1,0 +1,49 @@
+Language model created by QuickLM on Fri Sep 15 12:41:17 EDT 2017
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 6 sentences and 8 words
+
+\data\
+ngram 1=8
+ngram 2=12
+ngram 3=6
+
+\1-grams:
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-1.5563 LAUDER -0.2218
+-1.5563 MUTE -0.2218
+-1.5563 NEXT -0.2218
+-1.5563 POWER -0.2218
+-1.5563 PREVIOUS -0.2218
+-1.5563 SILENT -0.2218
+
+\2-grams:
+-1.0792 <s> LAUDER 0.0000
+-1.0792 <s> MUTE 0.0000
+-1.0792 <s> NEXT 0.0000
+-1.0792 <s> POWER 0.0000
+-1.0792 <s> PREVIOUS 0.0000
+-1.0792 <s> SILENT 0.0000
+-0.3010 LAUDER </s> -0.3010
+-0.3010 MUTE </s> -0.3010
+-0.3010 NEXT </s> -0.3010
+-0.3010 POWER </s> -0.3010
+-0.3010 PREVIOUS </s> -0.3010
+-0.3010 SILENT </s> -0.3010
+
+\3-grams:
+-0.3010 <s> LAUDER </s>
+-0.3010 <s> MUTE </s>
+-0.3010 <s> NEXT </s>
+-0.3010 <s> POWER </s>
+-0.3010 <s> PREVIOUS </s>
+-0.3010 <s> SILENT </s>
+
+\end\
