@@ -4,7 +4,7 @@ The Irdroid Eye Control application allows the user to control Infrared controll
 
 # Video
 
-[![Watch the video](http://www.irdroid.com/Irdroid-Voice-Control.png)](https://www.youtube.com/watch?v=hhOqlWFN7EI&feature=youtu.be)
+[![Watch the video](https://irdroid.github.io/Eye-Control/Irdroid-Voice-Control.png)](https://www.youtube.com/watch?v=hhOqlWFN7EI&feature=youtu.be)
 
 
 ## Application features:
