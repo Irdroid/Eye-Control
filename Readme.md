@@ -23,8 +23,8 @@ The Irdroid Eye Control application allows the user to control Infrared controll
 
 ## Example Application:
 
-*Allow people with disabilities to control TVs, STBs and more only by focusing their eyes at the Irdroid Accessibility remote control buttons by using their Eye Control Software and Hardware.
-*Allow people with disabilities to control TVs, STBs and more using their voice in Windows.
+* Allow people with disabilities to control TVs, STBs and more only by focusing their eyes at the Irdroid Accessibility remote control buttons by using their Eye Control Software and Hardware.
+* Allow people with disabilities to control TVs, STBs and more using their voice in Windows.
 Add IR Eye Control for you Desktop / Laptop computer 
 
 ## Module Kit:
