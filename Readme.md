@@ -9,17 +9,17 @@ The Irdroid Eye Control application allows the user to control Infrared controll
 
 ## Application features:
 
-*Support for all major TV, STB, Video Manufacturers
-*Works with WinLirc and Lirc
-*Compatible with Irdroid USB Infrared transceiver.
-*Java Application
-*Compatible with Windows voice control
+* Support for all major TV, STB, Video Manufacturers
+* Works with WinLirc and Lirc
+* Compatible with Irdroid USB Infrared transceiver.
+* Java Application
+* Compatible with Windows voice control
 
 ## Requirements:
 
-*PC with Java installed.
-*Working WinLirc/Lirc
-*Pre-installed Eye Control Hardware and Software.
+* PC with Java installed.
+* Working WinLirc/Lirc
+* Pre-installed Eye Control Hardware and Software.
 
 ## Example Application:
 
